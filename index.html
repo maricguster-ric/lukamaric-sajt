@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#060A09">
-<meta name="description" content="Luka Marić: etički haker, programer i autor Telegram botova. Portfolio radova.">
+<meta name="description" content="Luka Marić: etički haker, AI developer (n8n), Python i C++ programer, Telegram botovi i kripto. Portfolio i zakazivanje razgovora.">
+<link rel="canonical" href="https://lukamaric.online/">
+<meta property="og:title" content="Luka Marić">
+<meta property="og:description" content="Etički haker, Python i C++ programer, Telegram botovi i kripto.">
+<meta property="og:url" content="https://lukamaric.online/">
+<meta property="og:type" content="website">
 <title>Luka Marić</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,6 +77,7 @@
   }
   .lang button:hover { color: var(--green); }
   .lang button[aria-pressed="true"] { color: var(--bg); background: var(--green); border-color: var(--green); }
+  @media (max-width: 520px) { .nav-term { display: none; } }
   @media (max-width: 460px) { .nav .id .host { display: none; } .nav-right { gap: 0.8rem; } .nav ul { gap: 0.8rem; } }
 
   /* Hero */
@@ -157,10 +163,101 @@
   .crow .glabel { margin: 0; width: 6rem; }
   .crow a { overflow-wrap: anywhere; min-width: 0; }
 
+  /* Booking */
+  .book { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 1.1rem; }
+  .panel { border: 1px solid var(--green-dim); background: var(--panel); border-radius: 4px; padding: 1.1rem; min-width: 0; }
+  .step { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.7rem; }
+  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; font-family: var(--mono); font-size: 0.85rem; }
+  .cal-head button { font-family: var(--mono); background: transparent; border: 1px solid var(--green-dim); color: var(--green); border-radius: 2px; padding: 0.2rem 0.6rem; cursor: pointer; }
+  .cal-head button:disabled { opacity: 0.3; cursor: default; }
+  .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.3rem; }
+  .cal .dow { font-family: var(--mono); font-size: 0.66rem; color: var(--muted); text-align: center; text-transform: uppercase; padding-bottom: 0.2rem; }
+  .cal button { aspect-ratio: 1; min-width: 0; font-family: var(--mono); font-size: 0.85rem; background: var(--green-faint); color: var(--text); border: 1px solid var(--green-faint); border-radius: 3px; cursor: pointer; padding: 0; }
+  .cal button:hover:not(:disabled) { border-color: var(--green); }
+  .cal button:disabled { background: transparent; color: #33463E; cursor: default; }
+  .cal button.sel { background: var(--green); color: var(--bg); border-color: var(--green); font-weight: 700; }
+  .slots { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .slots button { font-family: var(--mono); font-size: 0.82rem; background: transparent; color: var(--green); border: 1px solid var(--green-dim); border-radius: 2px; padding: 0.35rem 0.65rem; cursor: pointer; }
+  .slots button.sel { background: var(--green); color: var(--bg); border-color: var(--green); }
+  .hint { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
+  .field { display: grid; gap: 0.3rem; margin-bottom: 0.8rem; }
+  .field label { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .field input, .field select, .field textarea { width: 100%; font: inherit; font-size: 16px; color: var(--text); background: var(--bg); border: 1px solid var(--green-dim); border-radius: 3px; padding: 0.55rem 0.65rem; }
+  .field textarea { min-height: 5rem; resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--green); }
+  .picked { font-family: var(--mono); font-size: 0.88rem; color: var(--green); margin-bottom: 0.9rem; min-height: 1.4em; }
+  .book .btn { cursor: pointer; width: 100%; text-align: center; }
+  .book .btn:disabled { opacity: 0.4; cursor: default; }
+  .msg { font-family: var(--mono); font-size: 0.82rem; margin-top: 0.8rem; }
+  .msg.ok { color: var(--green); } .msg.err { color: var(--amber); }
+  .hp { position: absolute; left: -9999px; }
+
   footer { margin-top: 3.5rem; padding-block: 1.5rem calc(env(safe-area-inset-bottom, 0px) + 2.25rem); border-top: 1px solid var(--green-faint); }
   footer p { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); }
 
+  /* ---- Interaktivni terminal ---- */
+  .shell { border: 1px solid var(--green-dim); background: #040807; border-radius: 6px; overflow: hidden; box-shadow: 0 0 40px rgba(77,240,160,0.06); }
+  .shell-out { height: 19rem; overflow-y: auto; padding: 1rem 1rem 0.4rem; font-family: var(--mono); font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .shell-out .in { color: var(--text); } .shell-out .in b { color: var(--amber); font-weight: 500; }
+  .shell-out .o { color: var(--green); } .shell-out .e { color: var(--amber); } .shell-out .d { color: var(--muted); }
+  .shell-out a { color: var(--green); }
+  .shell-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem 0.9rem; font-family: var(--mono); font-size: 0.85rem; }
+  .shell-row b { color: var(--amber); font-weight: 500; white-space: nowrap; }
+  .shell-row input { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--green); font: inherit; font-size: 16px; caret-color: var(--green); outline: none; }
+  .shell-tips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+  .shell-tips button { font-family: var(--mono); font-size: 0.75rem; background: transparent; color: var(--muted); border: 1px dashed var(--green-dim); border-radius: 2px; padding: 0.25rem 0.55rem; cursor: pointer; }
+  .shell-tips button:hover { color: var(--green); border-color: var(--green); }
+  #matrix { position: fixed; inset: 0; z-index: 80; background: #000; display: block; cursor: pointer; }
+
+  /* ---- Boot, mreža, kucanje ---- */
+  #boot { position: fixed; inset: 0; z-index: 90; background: var(--bg); padding: max(1.5rem, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 1.5rem max(16px, env(safe-area-inset-left));
+          font-family: var(--mono); font-size: clamp(0.72rem, 2.6vw, 0.9rem); line-height: 1.7; color: var(--muted); overflow: hidden; transition: opacity 0.5s, transform 0.5s; cursor: pointer; }
+  #boot .ok { color: var(--green); } #boot .w { color: var(--amber); }
+  #boot .skip { position: absolute; right: max(16px, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); font-size: 0.72rem; color: var(--green-dim); }
+  #boot.done { opacity: 0; transform: scale(1.03); pointer-events: none; }
+  #net { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.55; }
+  .decr { font-family: var(--mono); font-size: 0.74rem; color: var(--amber); margin: -0.6rem 0 1.3rem; letter-spacing: 0.04em; min-height: 1.2em; }
+  .decr .dot { display: inline-block; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); margin-right: 0.4rem; animation: blink 1.6s steps(1) infinite; }
+  .scr { min-height: 0.95em; }
+  .role .typed { color: var(--green); }
+  .role .tcur, #boot .tcur { display: inline-block; width: 0.55em; height: 1em; background: var(--amber); vertical-align: text-bottom; margin-left: 2px; animation: blink 0.9s steps(1) infinite; }
+
+  /* ---- Efekti ---- */
+  .progress { position: fixed; top: 0; left: 0; height: 2px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--green); box-shadow: 0 0 10px var(--green); z-index: 70; }
+  .spot { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0; transition: opacity 0.4s;
+          background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(77, 240, 160, 0.07), transparent 60%); }
+  body.has-mouse .spot { opacity: 1; }
+  .nav, header, main, footer { position: relative; z-index: 1; }
+  .nav { position: sticky; z-index: 40; }
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .does > div, .card { position: relative; transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; }
+  .does > div::after, .card::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.3s;
+          background: radial-gradient(260px circle at var(--x, 50%) var(--y, 50%), rgba(77, 240, 160, 0.12), transparent 65%); }
+  .does > div:hover, .card:hover { transform: translateY(-4px); border-color: var(--green); box-shadow: 0 10px 30px rgba(77, 240, 160, 0.1); }
+  .does > div:hover::after, .card:hover::after { opacity: 1; }
+  .does > div:hover h3::before { animation: nudge 0.6s ease infinite alternate; }
+  @keyframes nudge { to { transform: translateX(4px); } }
+  .chip { transition: background 0.2s, color 0.2s, transform 0.2s; }
+  li.chip:hover { background: var(--green); color: var(--bg); transform: translateY(-2px); }
+  .btn { transition: background 0.2s, color 0.2s, box-shadow 0.2s; }
+  .btn:hover { box-shadow: 0 0 18px rgba(77, 240, 160, 0.45); }
+  .name .second { position: relative; display: inline-block; }
+  .name:hover .second { animation: glitch 0.5s steps(2) infinite; }
+  @keyframes glitch {
+    0% { text-shadow: 2px 0 var(--amber), -2px 0 #2bd9ff; transform: translate(0); }
+    25% { text-shadow: -3px 0 var(--amber), 3px 0 #2bd9ff; transform: translate(-2px, 1px); }
+    50% { text-shadow: 3px 0 var(--amber), -1px 0 #2bd9ff; transform: translate(2px, -1px); }
+    75% { text-shadow: -1px 0 var(--amber), 2px 0 #2bd9ff; transform: translate(1px, 1px); }
+    100% { text-shadow: 0 0 28px rgba(77, 240, 160, 0.35); transform: translate(0); }
+  }
+  .rules li { transition: transform 0.2s, color 0.2s; }
+  .rules li:hover { transform: translateX(6px); color: var(--green); }
+
   @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .name:hover .second, .does > div:hover h3::before { animation: none; }
+    .spot { display: none; }
     html { scroll-behavior: auto; }
     .cursor { animation: none; }
     .card, .media img { transition: none; }
@@ -169,13 +266,18 @@
 </head>
 <body>
 
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="spot" aria-hidden="true"></div>
+<canvas id="net" aria-hidden="true"></canvas>
 <nav class="nav" aria-label="Navigacija">
   <div class="wrap nav-in">
-    <span class="id"><span class="host">luka@maric</span><b>:</b>~$</span>
+    <span class="id"><span class="host">ric@lukamaric</span><b>:</b>~$</span>
     <div class="nav-right">
       <ul>
         <li><a href="#o-meni" data-i18n="nav_about">o-meni</a></li>
         <li><a href="#radovi" data-i18n="nav_work">radovi</a></li>
+        <li class="nav-term"><a href="#terminal">terminal</a></li>
+        <li><a href="#termin" data-i18n="nav_book">termin</a></li>
         <li id="nav-contact" hidden><a href="#kontakt" data-i18n="nav_contact">kontakt</a></li>
       </ul>
       <div class="lang" role="group" aria-label="Jezik / Language">
@@ -189,18 +291,19 @@
 <header class="hero">
   <div class="wrap">
     <div class="term">
-      <div class="term-bar"><i></i><i></i><i></i><span>luka@maric: ~</span></div>
+      <div class="term-bar"><i></i><i></i><i></i><span>ssh ric@lukamaric.online</span></div>
       <div class="term-body">
-        <p class="prompt"><b>luka@maric</b>:<em>~</em>$ whoami</p>
-        <h1 class="name"><span>Luka</span><span class="second">Marić</span></h1>
-        <p class="prompt"><b>luka@maric</b>:<em>~</em>$ <span data-i18n="cmd_role">cat uloga.txt</span></p>
+        <p class="prompt"><b>ric@lukamaric</b>:<em>~</em>$ <span data-i18n="cmd_who">sudo ./decrypt --target=identity</span></p>
+        <h1 class="name" aria-label="Luka Marić"><span class="scr" data-t="Luka" aria-hidden="true">Luka</span><span class="second scr" data-t="Marić" aria-hidden="true">Marić</span></h1>
+        <p class="decr" id="decr"></p>
+        <p class="prompt"><b>ric@lukamaric</b>:<em>~</em>$ <span data-i18n="cmd_role">cat uloga.txt</span></p>
         <p class="role" id="role"></p>
-        <p class="prompt"><b>luka@maric</b>:<em>~</em>$ <span data-i18n="cmd_about">cat o-meni.txt</span></p>
+        <p class="prompt"><b>ric@lukamaric</b>:<em>~</em>$ <span data-i18n="cmd_about">cat o-meni.txt</span></p>
         <p class="about" id="about"></p>
-        <p class="prompt"><b>luka@maric</b>:<em>~</em>$<span class="cursor" aria-hidden="true"></span></p>
+        <p class="prompt"><b>ric@lukamaric</b>:<em>~</em>#<span class="cursor" aria-hidden="true"></span></p>
         <div class="hero-links">
           <a class="btn solid" href="#radovi" data-i18n="btn_work">Pogledaj radove</a>
-          <a class="btn" href="#kontakt" id="hero-contact" data-i18n="btn_contact" hidden>Kontakt</a>
+          <a class="btn" href="#termin" data-i18n="btn_book">Zakaži razgovor</a>
         </div>
       </div>
     </div>
@@ -214,22 +317,58 @@
     <div class="does">
       <div>
         <h3 data-i18n="d1_t">Etičko hakovanje</h3>
-        <p data-i18n="d1_p">Tražim slabe tačke u sistemima, uz dozvolu vlasnika, da bi ih on popravio pre nego što ih neko zloupotrebi.</p>
+        <p data-i18n="d1_p"></p>
+      </div>
+      <div>
+        <h3 data-i18n="d5_t">AI i automatizacija</h3>
+        <p data-i18n="d5_p"></p>
       </div>
       <div>
         <h3 data-i18n="d2_t">Telegram botovi</h3>
-        <p data-i18n="d2_p">Pravim botove koji odgovaraju korisnicima i rade zadatke umesto njih.</p>
+        <p data-i18n="d2_p"></p>
+      </div>
+      <div>
+        <h3 data-i18n="d6_t">Sajtovi i VPS</h3>
+        <p data-i18n="d6_p"></p>
+      </div>
+      <div>
+        <h3 data-i18n="d7_t">FiveM i RedM serveri</h3>
+        <p data-i18n="d7_p"></p>
+      </div>
+      <div>
+        <h3 data-i18n="d8_t">Baze podataka</h3>
+        <p data-i18n="d8_p"></p>
+      </div>
+      <div>
+        <h3 data-i18n="d9_t">Windows i Linux</h3>
+        <p data-i18n="d9_p"></p>
       </div>
       <div>
         <h3 data-i18n="d3_t">Programiranje</h3>
-        <p data-i18n="d3_p">Pišem u Pythonu, C-u i C++-u, a AI alate koristim kao pomoć u radu.</p>
+        <p data-i18n="d3_p"></p>
+      </div>
+      <div>
+        <h3 data-i18n="d4_t">Kripto</h3>
+        <p data-i18n="d4_p"></p>
       </div>
     </div>
     <div class="skills">
-      <div><p class="glabel" data-i18n="s_lang">Jezici</p><ul class="chips"><li class="chip">Python</li><li class="chip">C</li><li class="chip">C++</li></ul></div>
-      <div><p class="glabel" data-i18n="s_tools">Alati</p><ul class="chips"><li class="chip" data-i18n="s_ai">AI alati</li><li class="chip">Telegram Bot API</li></ul></div>
+      <div><p class="glabel" data-i18n="s_lang">Jezici</p><ul class="chips"><li class="chip">Python</li><li class="chip">C</li><li class="chip">C++</li><li class="chip">Lua</li><li class="chip">HTML</li><li class="chip">CSS</li><li class="chip">JavaScript</li></ul></div>
+      <div><p class="glabel" data-i18n="s_tools">Alati</p><ul class="chips"><li class="chip" data-i18n="s_ai">AI alati</li><li class="chip">n8n</li><li class="chip">VPS</li><li class="chip">MySQL</li><li class="chip">SQL</li><li class="chip">FiveM</li><li class="chip">RedM</li><li class="chip">Telegram Bot API</li></ul></div>
       <div><p class="glabel" data-i18n="s_field">Oblast</p><ul class="chips"><li class="chip" data-i18n="s_eh">Etičko hakovanje</li><li class="chip" data-i18n="s_sec">Bezbednost sistema</li></ul></div>
+      <div><p class="glabel" data-i18n="s_os">Sistemi</p><ul class="chips"><li class="chip">Windows</li><li class="chip">Linux</li><li class="chip">Bash</li><li class="chip">PowerShell</li></ul></div>
+      <div><p class="glabel">Web3</p><ul class="chips"><li class="chip">Crypto</li><li class="chip">Blockchain</li><li class="chip" data-i18n="s_wallet">Novčanici</li></ul></div>
     </div>
+  </section>
+
+  <section id="terminal" aria-labelledby="h-term">
+    <h2 id="h-term" data-i18n="h_term">Probaj terminal</h2>
+    <p class="comment" data-i18n="c_term">ukucaj komandu, npr. help</p>
+    <div class="shell" id="shell">
+      <div class="shell-out" id="sh-out" aria-live="polite"></div>
+      <form class="shell-row" id="sh-form" autocomplete="off"><b>guest@lukamaric:~$</b><input id="sh-in" aria-label="komanda" spellcheck="false" autocapitalize="off" autocorrect="off"></form>
+    </div>
+    <div class="shell-tips" id="sh-tips"></div>
   </section>
 
   <section aria-labelledby="h-pravila">
@@ -238,7 +377,8 @@
     <ul class="rules">
       <li data-i18n="r1">Testiram samo sisteme za koje imam dozvolu.</li>
       <li data-i18n="r2">Ranjivost prijavljujem vlasniku, ne objavljujem je.</li>
-      <li data-i18n="r3">Tuđe podatke ne čitam, ne menjam i ne delim.</li>
+      <li data-i18n="r3"></li>
+      <li data-i18n="r4"></li>
     </ul>
   </section>
 
@@ -247,6 +387,31 @@
     <p class="comment" data-i18n="c_work">botovi, kod i bezbednosni zadaci</p>
     <div class="filters" id="filters" hidden></div>
     <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="termin" aria-labelledby="h-termin">
+    <h2 id="h-termin" data-i18n="h_book">Zakaži razgovor</h2>
+    <p class="comment" data-i18n="c_book"></p>
+    <form class="book" id="book" novalidate>
+      <div class="panel">
+        <p class="step" data-i18n="st1">01 / dan</p>
+        <div class="cal-head"><button type="button" id="cal-prev" aria-label="&lt;">&lt;</button><span id="cal-title"></span><button type="button" id="cal-next" aria-label="&gt;">&gt;</button></div>
+        <div class="cal" id="cal"></div>
+        <p class="step" style="margin-top:1.2rem" data-i18n="st2">02 / vreme</p>
+        <div class="slots" id="slots"></div>
+      </div>
+      <div class="panel">
+        <p class="step" data-i18n="st3">03 / podaci</p>
+        <p class="picked" id="picked"></p>
+        <div class="field"><label for="f-name" data-i18n="f_name">Ime</label><input id="f-name" name="ime" autocomplete="name" required></div>
+        <div class="field"><label for="f-contact" data-i18n="f_contact">Email ili Telegram</label><input id="f-contact" name="kontakt" required></div>
+        <div class="field"><label for="f-topic" data-i18n="f_topic">Tema</label><select id="f-topic" name="tema"></select></div>
+        <div class="field"><label for="f-note" data-i18n="f_note">Poruka</label><textarea id="f-note" name="poruka"></textarea></div>
+        <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn solid" type="submit" id="f-send" data-i18n="f_send">Pošalji zahtev</button>
+        <p class="msg" id="f-msg" role="status"></p>
+      </div>
+    </form>
   </section>
 
   <section id="kontakt" aria-labelledby="h-kontakt" hidden>
@@ -267,14 +432,22 @@
 
 var CONFIG = {
   role: {
-    sr: ['etički haker', 'programer', 'Telegram botovi'],
-    en: ['ethical hacker', 'programmer', 'Telegram bots']
+    sr: ['etički haker', 'AI developer', 'web dev', 'Python / C++ / Lua', 'FiveM / RedM', 'Telegram botovi', 'kripto'],
+    en: ['ethical hacker', 'AI developer', 'web dev', 'Python / C++ / Lua', 'FiveM / RedM', 'Telegram bots', 'crypto']
   },
   about: {
-    sr: 'Programiram u Pythonu, C-u i C++-u i pravim Telegram botove. Zanima me bezbednost sistema: kako se nešto zloupotrebi i kako se to sprečava. Ovde su moji radovi.',
-    en: 'I program in Python, C and C++ and build Telegram bots. I am interested in system security: how things get abused and how to prevent it. Here is my work.'
+    sr: 'Ćao, ja sam Luka. Najviše vremena provodim za računarom: pišem Python skripte, pravim AI sisteme u n8n-u i Telegram botove i kopam po tome kako sistemi rade, a još više po tome gde pucaju. Paralelno već neko vreme pratim kripto i radim sa novčanicima i berzama. Ovde skupljam stvari koje sam napravio.',
+    en: 'Hi, I\'m Luka. I spend most of my time at the computer: writing Python scripts, building AI systems in n8n and Telegram bots and digging into how systems work, and even more into where they break. On the side I\'ve been into crypto for a while, working with wallets and exchanges. This is where I keep the things I\'ve built.'
   },
-  contact: { telegram: '', github: '', email: '' }   // upiši korisnička imena, npr. telegram: 'luka123'
+  contact: { telegram: 'ric_ric133', github: '', email: 'maricguster@gmail.com' },   // upiši korisnička imena, npr. telegram: 'luka123'
+
+  // ZAKAZIVANJE: zahtevi stižu na ovaj mejl (preko besplatnog servisa formsubmit.co)
+  booking: {
+    email: 'maricguster@gmail.com',
+    days: [1, 2, 3, 4, 5, 6],                   // 1=pon ... 6=sub, 0=ned
+    slots: ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00'],
+    weeksAhead: 4
+  }
 };
 
 /* Svaki rad je jedan blok. Primer (obriši // ispred reda da bi se prikazao):
@@ -293,66 +466,110 @@ var WORKS = [
 
 var I18N = {
   sr: {
-    nav_about: 'o-meni', nav_work: 'radovi', nav_contact: 'kontakt',
-    cmd_role: 'cat uloga.txt', cmd_about: 'cat o-meni.txt',
-    btn_work: 'Pogledaj radove', btn_contact: 'Kontakt',
-    h_does: 'Šta radim', c_does: 'tri stvari kojima se bavim',
-    d1_t: 'Etičko hakovanje', d1_p: 'Tražim slabe tačke u sistemima, uz dozvolu vlasnika, da bi ih on popravio pre nego što ih neko zloupotrebi.',
-    d2_t: 'Telegram botovi', d2_p: 'Pravim botove koji odgovaraju korisnicima i rade zadatke umesto njih.',
-    d3_t: 'Programiranje', d3_p: 'Pišem u Pythonu, C-u i C++-u, a AI alate koristim kao pomoć u radu.',
-    s_lang: 'Jezici', s_tools: 'Alati', s_field: 'Oblast', s_ai: 'AI alati', s_eh: 'Etičko hakovanje', s_sec: 'Bezbednost sistema',
-    h_rules: 'Moja pravila', c_rules: 'šta znači "etički"',
-    r1: 'Testiram samo sisteme za koje imam dozvolu.',
-    r2: 'Ranjivost prijavljujem vlasniku, ne objavljujem je.',
+    nav_about: 'o-meni', nav_work: 'radovi', nav_book: 'termin', nav_contact: 'kontakt',
+    cmd_who: 'sudo ./decrypt --target=identity', cmd_role: 'cat /etc/luka/uloge.conf', cmd_about: 'less ~/PROCITAJ_ME.md',
+    decr: '[+] identitet dešifrovan  ·  alias: ric  ·  pristup: root  ·  online',
+    btn_work: 'Pogledaj radove', btn_book: 'Zakaži razgovor', btn_contact: 'Kontakt',
+    h_does: 'Čime se bavim', c_does: 'ukratko',
+    d1_t: 'Etičko hakovanje', d1_p: 'Volim da nađem rupu pre nego što je nađe neko drugi. Radim CTF zadatke, testiram sopstvene projekte i učim kako napadi stvarno izgledaju, da bih znao kako da ih sprečim.',
+    d5_t: 'AI i automatizacija', d5_p: 'Pravim AI sisteme u n8n-u: tokove koji sami čitaju poruke i mejlove, pozivaju AI modele, upisuju podatke i šalju odgovore. Cilj je da posao koji se ponavlja radi sistem, a ne čovek.',
+    d6_t: 'Sajtovi i VPS', d6_p: 'Pravim sajtove od nule, ovaj ovde je jedan od njih, i dovodim ih online sa domenom. Radim na VPS serverima: podešavam Linux, pokrećem botove i n8n da rade non-stop.',
+    d7_t: 'FiveM i RedM serveri', d7_p: 'Pravim i održavam FiveM i RedM servere. Skripte pišem u Lui, prilagođavam postojeće resurse i podižem server na VPS tako da radi stabilno i sa puno igrača.',
+    d8_t: 'Baze podataka', d8_p: 'Radim sa MySQL i SQL bazama: pravim tabele, pišem upite i povezujem bazu sa botovima, sajtovima i FiveM serverima, da se podaci čuvaju sigurno i brzo čitaju.',
+    d9_t: 'Windows i Linux', d9_p: 'Oba sistema znam u dušu, od instalacije i podešavanja do mreže, korisnika, dozvola i rešavanja problema. Na Linuxu živim u terminalu, na Windowsu znam i šta je ispod grafičkog dela.',
+    d2_t: 'Telegram botovi', d2_p: 'Pravim botove koji rade dosadne stvari umesto ljudi: odgovaraju na poruke, šalju obaveštenja, vode evidenciju. Najčešće u Pythonu, od ideje do bota koji radi 24/7.',
+    d3_t: 'Programiranje', d3_p: 'Python mi je glavni jezik, a C i C++ koristim kad treba da razumem šta se dešava ispod haube. AI alate koristim svakodnevno, ali kod uvek proverim i razumem pre nego što ga pustim.',
+    d4_t: 'Kripto', d4_p: 'U kripto svetu sam već neko vreme: novčanici, berze, transakcije na različitim mrežama. Pošto dolazim iz bezbednosti, posebno pazim na prevare, lažne tokene i čuvanje ključeva.',
+    s_lang: 'Jezici', s_tools: 'Alati', s_field: 'Oblast', s_ai: 'AI alati', s_eh: 'Etičko hakovanje', s_sec: 'Bezbednost sistema', s_wallet: 'Novčanici', s_os: 'Sistemi',
+    h_term: 'Probaj terminal', c_term: 'ukucaj komandu ili klikni ispod',
+    h_rules: 'Kako radim', c_rules: 'šta za mene znači "etički"',
+    r1: 'Testiram samo ono za šta imam dozvolu. Bez izuzetaka.',
+    r2: 'Kad nađem propust, javim vlasniku. Ne objavljujem ga i ne koristim.',
     r3: 'Tuđe podatke ne čitam, ne menjam i ne delim.',
-    h_work: 'Radovi', c_work: 'botovi, kod i bezbednosni zadaci',
+    r4: 'Nikad ne tražim nečiju seed frazu ni privatni ključ, i niko ne bi trebalo da ih daje.',
+    h_work: 'Radovi', c_work: 'projekti na kojima sam radio',
     all: 'Svi', kind_kod: 'Kod', kind_bot: 'Telegram bot', kind_sec: 'Bezbednost', kind_ostalo: 'Drugo',
-    soon: 'Stiže uskoro',
-    soon_bot: 'Prvi Telegram bot sa opisom i linkom.',
-    soon_sec: 'Prvi CTF zadatak ili opis ranjivosti koja je pronađena i prijavljena.',
-    soon_kod: 'Prvi projekat u Pythonu ili C-u.',
+    soon: 'uskoro', soon_tag: 'opis stiže uskoro', kind_ai: 'AI / n8n', kind_game: 'FiveM / RedM',
+    st_game: 'FiveM i RedM serveri', soon_game: 'Serveri i Lua skripte koje sam radio. Uskoro ovde opis i snimci.',
+    st_ai: 'AI automatizacija u n8n-u', soon_ai: 'Sistem koji sam napravio u n8n-u: AI čita poruke, obrađuje podatke i šalje odgovore bez ručnog rada.',
+    st_bot: 'Telegram bot', soon_bot: 'Bot koji sam napravio u Pythonu. Uskoro ovde opis, šta radi i link da ga probaš.',
+    st_sec: 'Bezbednost i CTF', soon_sec: 'Zadaci iz etičkog hakovanja koje sam rešavao, sa objašnjenjem kako sam došao do rešenja.',
+    st_kod: 'Python i C++ projekti', soon_kod: 'Skripte i programi koje sam pisao. Kod ide na GitHub, a ovde kratak opis svakog.',
     open: 'Otvori projekat',
-    h_contact: 'Kontakt', c_contact: 'javi se',
+    h_book: 'Zakaži razgovor', c_book: 'izaberi dan i vreme, javiću ti se da potvrdim',
+    st1: '01 / dan', st2: '02 / vreme', st3: '03 / tvoji podaci',
+    f_name: 'Ime', f_contact: 'Email ili Telegram', f_topic: 'Tema', f_note: 'Poruka (nije obavezno)', f_send: 'Pošalji zahtev',
+    topics: ['Upoznavanje / razgovor', 'Posao ili praksa', 'AI / n8n automatizacija', 'Izrada sajta', 'FiveM / RedM server', 'Telegram bot po meri', 'Bezbednost', 'Kripto', 'Nešto drugo'],
+    dows: ['pon', 'uto', 'sre', 'čet', 'pet', 'sub', 'ned'],
+    pick_day: 'Prvo izaberi dan.', pick_time: 'Izaberi vreme za', picked: 'Termin:',
+    need: 'Izaberi termin i upiši ime i kontakt.',
+    sending: 'Šaljem...',
+    ok: 'Zahtev je poslat. Javljam se uskoro da potvrdim termin.',
+    err: 'Nešto nije prošlo. Probaj ponovo za minut.',
+    off: 'Zakazivanje još nije povezano. Uskoro radi.',
+    h_contact: 'Kontakt', c_contact: 'ili mi piši direktno',
     foot: 'etički haker',
-    desc: 'Luka Marić: etički haker, programer i autor Telegram botova. Portfolio radova.',
+    desc: 'Luka Marić: etički haker, AI developer (n8n), Python i C++ programer, Telegram botovi i kripto. Portfolio i zakazivanje razgovora.',
     locale: 'sr-Latn-RS'
   },
   en: {
-    nav_about: 'about', nav_work: 'work', nav_contact: 'contact',
-    cmd_role: 'cat role.txt', cmd_about: 'cat about.txt',
-    btn_work: 'View work', btn_contact: 'Contact',
-    h_does: 'What I do', c_does: 'three things I work on',
-    d1_t: 'Ethical hacking', d1_p: 'I look for weak points in systems, with the owner\'s permission, so the owner can fix them before someone abuses them.',
-    d2_t: 'Telegram bots', d2_p: 'I build bots that answer users and do tasks for them.',
-    d3_t: 'Programming', d3_p: 'I write in Python, C and C++, and use AI tools to help with my work.',
-    s_lang: 'Languages', s_tools: 'Tools', s_field: 'Field', s_ai: 'AI tools', s_eh: 'Ethical hacking', s_sec: 'System security',
-    h_rules: 'My rules', c_rules: 'what "ethical" means',
-    r1: 'I only test systems I have permission to test.',
-    r2: 'I report vulnerabilities to the owner, I do not publish them.',
-    r3: 'I do not read, change or share other people\'s data.',
-    h_work: 'Work', c_work: 'bots, code and security challenges',
+    nav_about: 'about', nav_work: 'work', nav_book: 'book', nav_contact: 'contact',
+    cmd_who: 'sudo ./decrypt --target=identity', cmd_role: 'cat /etc/luka/roles.conf', cmd_about: 'less ~/README.md',
+    decr: '[+] identity decrypted  ·  alias: ric  ·  access: root  ·  online',
+    btn_work: 'View work', btn_book: 'Book a call', btn_contact: 'Contact',
+    h_does: 'What I do', c_does: 'in short',
+    d1_t: 'Ethical hacking', d1_p: 'I like finding the hole before someone else does. I do CTF challenges, test my own projects and learn what real attacks look like, so I know how to stop them.',
+    d5_t: 'AI & automation', d5_p: 'I build AI systems in n8n: workflows that read messages and emails on their own, call AI models, save data and send replies. The goal is for the system to handle repetitive work, not a person.',
+    d6_t: 'Websites & VPS', d6_p: 'I build websites from scratch, this one included, and take them live on a domain. I work on VPS servers: setting up Linux, running bots and n8n so they stay up around the clock.',
+    d7_t: 'FiveM & RedM servers', d7_p: 'I build and run FiveM and RedM servers. I write scripts in Lua, customize existing resources and host the server on a VPS so it stays stable with lots of players.',
+    d8_t: 'Databases', d8_p: 'I work with MySQL and SQL databases: designing tables, writing queries and connecting the database to bots, websites and FiveM servers, so data is stored safely and read fast.',
+    d9_t: 'Windows & Linux', d9_p: 'I know both systems inside out, from installing and configuring them to networking, users, permissions and troubleshooting. On Linux I live in the terminal, on Windows I know what sits under the GUI.',
+    d2_t: 'Telegram bots', d2_p: 'I build bots that do the boring stuff for people: answering messages, sending alerts, keeping records. Mostly in Python, from the idea to a bot running 24/7.',
+    d3_t: 'Programming', d3_p: 'Python is my main language, and I use C and C++ when I want to understand what is going on under the hood. I use AI tools every day, but I always read and understand the code before I ship it.',
+    d4_t: 'Crypto', d4_p: 'I\'ve been in crypto for a while: wallets, exchanges, transactions across different networks. Coming from security, I pay extra attention to scams, fake tokens and key storage.',
+    s_lang: 'Languages', s_tools: 'Tools', s_field: 'Field', s_ai: 'AI tools', s_eh: 'Ethical hacking', s_sec: 'System security', s_wallet: 'Wallets', s_os: 'Systems',
+    h_term: 'Try the terminal', c_term: 'type a command or tap one below',
+    h_rules: 'How I work', c_rules: 'what "ethical" means to me',
+    r1: 'I only test what I have permission to test. No exceptions.',
+    r2: 'When I find a flaw, I tell the owner. I don\'t publish it or use it.',
+    r3: 'I don\'t read, change or share other people\'s data.',
+    r4: 'I will never ask for your seed phrase or private key, and nobody should.',
+    h_work: 'Work', c_work: 'projects I have worked on',
     all: 'All', kind_kod: 'Code', kind_bot: 'Telegram bot', kind_sec: 'Security', kind_ostalo: 'Other',
-    soon: 'Coming soon',
-    soon_bot: 'First Telegram bot, with a description and a link.',
-    soon_sec: 'First CTF challenge, or a write-up of a vulnerability that was found and reported.',
-    soon_kod: 'First project in Python or C.',
+    soon: 'coming soon', soon_tag: 'write-up coming soon', kind_ai: 'AI / n8n', kind_game: 'FiveM / RedM',
+    st_game: 'FiveM & RedM servers', soon_game: 'Servers and Lua scripts I have made. Description and screenshots coming soon.',
+    st_ai: 'AI automation in n8n', soon_ai: 'A system I built in n8n: AI reads messages, processes data and sends replies with no manual work.',
+    st_bot: 'Telegram bot', soon_bot: 'A bot I built in Python. Description, what it does and a link to try it coming soon.',
+    st_sec: 'Security & CTF', soon_sec: 'Ethical hacking challenges I have solved, with an explanation of how I got to the solution.',
+    st_kod: 'Python & C++ projects', soon_kod: 'Scripts and programs I have written. Code goes to GitHub, with a short description of each here.',
     open: 'Open project',
-    h_contact: 'Contact', c_contact: 'get in touch',
+    h_book: 'Book a call', c_book: 'pick a day and time, I\'ll get back to you to confirm',
+    st1: '01 / day', st2: '02 / time', st3: '03 / your details',
+    f_name: 'Name', f_contact: 'Email or Telegram', f_topic: 'Topic', f_note: 'Message (optional)', f_send: 'Send request',
+    topics: ['Intro / chat', 'Job or internship', 'AI / n8n automation', 'Website', 'FiveM / RedM server', 'Custom Telegram bot', 'Security', 'Crypto', 'Something else'],
+    dows: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
+    pick_day: 'Pick a day first.', pick_time: 'Pick a time for', picked: 'Slot:',
+    need: 'Pick a slot and fill in your name and contact.',
+    sending: 'Sending...',
+    ok: 'Request sent. I\'ll get back to you soon to confirm.',
+    err: 'Something went wrong. Try again in a minute.',
+    off: 'Booking isn\'t connected yet. Coming soon.',
+    h_contact: 'Contact', c_contact: 'or message me directly',
     foot: 'ethical hacker',
-    desc: 'Luka Marić: ethical hacker, programmer and Telegram bot builder. Portfolio.',
+    desc: 'Luka Marić: ethical hacker, AI developer (n8n), Python and C++ developer, Telegram bots and crypto. Portfolio and call booking.',
     locale: 'en-GB'
   }
 };
 
 /* ============================================================ */
 
-var GLYPH = { kod: '<' + '/>', bot: 'BOT', sec: 'SEC', ostalo: '+' };
-var KINDS = ['kod', 'bot', 'sec', 'ostalo'];
+var GLYPH = { ai: 'AI', game: 'LUA', kod: '<' + '/>', bot: 'BOT', sec: 'SEC', ostalo: '+' };
+var KINDS = ['ai', 'game', 'kod', 'bot', 'sec', 'ostalo'];
 var lang = 'sr';
 var filter = 'svi';
 try { var saved = localStorage.getItem('lang'); if (saved === 'sr' || saved === 'en') lang = saved; } catch (e) {}
 
-function t(k) { return (I18N[lang] && I18N[lang][k]) || I18N.sr[k] || k; }
+function t(k) { return (I18N[lang] && I18N[lang][k] != null) ? I18N[lang][k] : (I18N.sr[k] != null ? I18N.sr[k] : k); }
 function h(tag, cls, text) {
   var e = document.createElement(tag);
   if (cls) e.className = cls;
@@ -396,9 +613,10 @@ function soon(kind) {
   var m = h('div', 'media'), p = h('div', 'ph', GLYPH[kind]);
   p.setAttribute('aria-hidden', 'true'); m.appendChild(p); c.appendChild(m);
   var b = h('div', 'cbody');
-  b.appendChild(h('p', 'cmeta', t('kind_' + kind)));
-  b.appendChild(h('h3', '', t('soon')));
+  b.appendChild(h('p', 'cmeta', t('kind_' + kind) + ' · ' + t('soon')));
+  b.appendChild(h('h3', '', t('st_' + kind)));
   b.appendChild(h('p', 'desc', t('soon_' + kind)));
+  b.appendChild(h('div', 'actions')).appendChild(h('span', 'chip', t('soon_tag')));
   c.appendChild(b);
   return c;
 }
@@ -407,9 +625,7 @@ function renderWorks() {
   var grid = document.getElementById('grid'), fl = document.getElementById('filters');
   grid.textContent = ''; fl.textContent = '';
   if (!WORKS.length) {
-    grid.appendChild(soon('bot'));
-    grid.appendChild(soon('sec'));
-    grid.appendChild(soon('kod'));
+    ['ai', 'game', 'bot', 'sec', 'kod'].forEach(function (k) { grid.appendChild(soon(k)); });
     fl.hidden = true;
     return;
   }
@@ -445,20 +661,147 @@ function renderContact() {
   if (em) row('Email', em, 'mailto:' + em);
   if (n) {
     document.getElementById('kontakt').hidden = false;
-    document.getElementById('hero-contact').hidden = false;
     document.getElementById('nav-contact').hidden = false;
   }
 }
 
+var typeTimer = null;
 function renderHero() {
-  var role = document.getElementById('role');
+  var role = document.getElementById('role'), list = CONFIG.role[lang] || CONFIG.role.sr || [];
   role.textContent = '';
-  (CONFIG.role[lang] || CONFIG.role.sr || []).forEach(function (txt, i) {
-    if (i) role.appendChild(h('span', 'sep', '/'));
-    role.appendChild(document.createTextNode(txt));
-  });
+  role.setAttribute('aria-label', list.join(' / '));
+  var span = h('span', 'typed'), cur = h('span', 'tcur');
+  role.appendChild(span); role.appendChild(cur);
+  span.setAttribute('aria-hidden', 'true');
+  clearTimeout(typeTimer);
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { span.textContent = list.join(' / '); return finishHero(); }
+  var wi = 0, ci = 0, del = false;
+  (function step() {
+    var w = list[wi] || '';
+    if (!del) { ci++; span.textContent = w.slice(0, ci); if (ci >= w.length) { del = true; typeTimer = setTimeout(step, 1600); return; } typeTimer = setTimeout(step, 70); }
+    else { ci--; span.textContent = w.slice(0, ci); if (ci <= 0) { del = false; wi = (wi + 1) % list.length; typeTimer = setTimeout(step, 300); return; } typeTimer = setTimeout(step, 35); }
+  })();
+  finishHero();
+}
+var scrDone = false;
+function scramble() {
+  var decr = document.getElementById('decr');
+  function setDecr() { decr.textContent = ''; decr.appendChild(h('span', 'dot')); decr.appendChild(document.createTextNode(t('decr'))); }
+  if (scrDone || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) { scrDone = true; return setDecr(); }
+  scrDone = true;
+  var CH = '!<>-_\\/[]{}=+*^?#01ABCDEFX$%&', els = document.querySelectorAll('.scr'), f = 0, delay = 0;
+  if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) delay = 3900;
+  decr.textContent = '[*] decrypting...';
+  setTimeout(function run() {
+    var done = true;
+    els.forEach(function (el, k) {
+      var tx = el.getAttribute('data-t'), o = '';
+      for (var i = 0; i < tx.length; i++) {
+        var at = 8 + k * 10 + i * 4;
+        if (f >= at) o += tx[i]; else { o += CH[Math.floor(Math.random() * CH.length)]; done = false; }
+      }
+      el.textContent = o;
+    });
+    f++;
+    if (!done) setTimeout(run, 45); else setDecr();
+  }, delay);
+}
+function finishHero() {
+  scramble();
+  if (scrDone && document.getElementById('decr').textContent.indexOf('[*]') < 0) { var d = document.getElementById('decr'); d.textContent = ''; d.appendChild(h('span', 'dot')); d.appendChild(document.createTextNode(t('decr'))); }
   document.getElementById('about').textContent = CONFIG.about[lang] || CONFIG.about.sr || '';
 }
+
+
+/* ---------- Zakazivanje / Booking ---------- */
+var B = CONFIG.booking || {};
+var today = new Date(); today.setHours(0, 0, 0, 0);
+var lastDay = new Date(today); lastDay.setDate(lastDay.getDate() + 7 * (B.weeksAhead || 4));
+var view = new Date(today.getFullYear(), today.getMonth(), 1);
+var selDay = null, selTime = null;
+
+function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
+function dayOk(d) { return d > today && d <= lastDay && (B.days || []).indexOf(d.getDay()) >= 0; }
+function fmtDay(d) { return d.toLocaleDateString(t('locale'), { weekday: 'long', day: 'numeric', month: 'long' }); }
+
+function renderCal() {
+  var cal = document.getElementById('cal'); cal.textContent = '';
+  var title = view.toLocaleDateString(t('locale'), { month: 'long', year: 'numeric' });
+  document.getElementById('cal-title').textContent = title.charAt(0).toUpperCase() + title.slice(1);
+  document.getElementById('cal-prev').disabled = view <= new Date(today.getFullYear(), today.getMonth(), 1);
+  document.getElementById('cal-next').disabled = new Date(view.getFullYear(), view.getMonth() + 1, 1) > lastDay;
+  t('dows').forEach(function (d) { cal.appendChild(h('span', 'dow', d)); });
+  var first = (view.getDay() + 6) % 7;
+  for (var i = 0; i < first; i++) cal.appendChild(h('span'));
+  var n = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+  for (var dd = 1; dd <= n; dd++) {
+    (function (d) {
+      var b = h('button', sameDay(d, selDay) ? 'sel' : '', String(d.getDate()));
+      b.type = 'button'; b.disabled = !dayOk(d);
+      b.setAttribute('aria-label', fmtDay(d));
+      b.onclick = function () { selDay = d; selTime = null; renderCal(); };
+      cal.appendChild(b);
+    })(new Date(view.getFullYear(), view.getMonth(), dd));
+  }
+  renderSlots();
+}
+
+function renderSlots() {
+  var box = document.getElementById('slots'); box.textContent = '';
+  if (!selDay) { box.appendChild(h('p', 'hint', t('pick_day'))); }
+  else {
+    (B.slots || []).forEach(function (s) {
+      var b = h('button', s === selTime ? 'sel' : '', s);
+      b.type = 'button'; b.setAttribute('aria-pressed', s === selTime ? 'true' : 'false');
+      b.onclick = function () { selTime = s; renderSlots(); };
+      box.appendChild(b);
+    });
+  }
+  var pk = document.getElementById('picked');
+  pk.textContent = selDay && selTime ? t('picked') + ' ' + fmtDay(selDay) + ', ' + selTime
+                 : selDay ? t('pick_time') + ' ' + fmtDay(selDay) : '';
+}
+
+function renderTopics() {
+  var sel = document.getElementById('f-topic'), cur = sel.selectedIndex;
+  sel.textContent = '';
+  t('topics').forEach(function (x) { var o = h('option', '', x); o.value = x; sel.appendChild(o); });
+  if (cur > 0) sel.selectedIndex = cur;
+}
+
+document.getElementById('cal-prev').onclick = function () { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCal(); };
+document.getElementById('cal-next').onclick = function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal(); };
+
+document.getElementById('book').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var msg = document.getElementById('f-msg'), btn = document.getElementById('f-send');
+  var name = document.getElementById('f-name').value.trim(), contact = document.getElementById('f-contact').value.trim();
+  msg.className = 'msg err';
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(B.email || '')) { msg.textContent = t('off'); return; }
+  if (!selDay || !selTime || !name || !contact) { msg.textContent = t('need'); return; }
+  if (this._honey.value) return;
+  var y = selDay.getFullYear(), mo = ('0' + (selDay.getMonth() + 1)).slice(-2), da = ('0' + selDay.getDate()).slice(-2);
+  var data = {
+    _subject: 'Novi termin: ' + da + '.' + mo + '.' + y + ' u ' + selTime + ' (' + name + ')',
+    _template: 'table', _captcha: 'false',
+    termin: da + '.' + mo + '.' + y + ' ' + selTime,
+    ime: name, kontakt: contact,
+    tema: document.getElementById('f-topic').value,
+    poruka: document.getElementById('f-note').value.trim(),
+    jezik: lang
+  };
+  btn.disabled = true; msg.className = 'msg'; msg.textContent = t('sending');
+  fetch('https://formsubmit.co/ajax/' + encodeURIComponent(B.email), {
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data)
+  }).then(function (r) { return r.json(); }).then(function (j) {
+    if (j && (j.success === true || j.success === 'true')) {
+      msg.className = 'msg ok'; msg.textContent = t('ok');
+      document.getElementById('book').reset(); selDay = null; selTime = null; renderCal(); renderTopics();
+    } else throw 0;
+  }).catch(function () { msg.className = 'msg err'; msg.textContent = t('err'); })
+    .then(function () { btn.disabled = false; });
+});
 
 function applyLang() {
   document.documentElement.lang = lang;
@@ -472,6 +815,8 @@ function applyLang() {
   renderHero();
   renderWorks();
   renderContact();
+  renderCal();
+  renderTopics();
 }
 
 function setLang(l) {
@@ -484,6 +829,199 @@ document.getElementById('lang-sr').addEventListener('click', function () { setLa
 document.getElementById('lang-en').addEventListener('click', function () { setLang('en'); });
 
 applyLang();
+
+/* ---- Boot ekran (jednom po poseti) ---- */
+(function () {
+  if ((window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  var b = h('div'); b.id = 'boot'; b.setAttribute('aria-hidden', 'true'); document.body.appendChild(b);
+  var en = lang === 'en';
+  var L = [
+    ['LM-BIOS v2.6  (c) Luka Marić', ''], ['CPU: python3 / c++ / lua ......... ', 'OK'], ['MEM: ' + (en ? 'coffee' : 'kafa') + ' 100% ................ ', 'OK'],
+    ['[    0.001] ' + (en ? 'loading kernel' : 'učitavam kernel') + ' lukamaric.online', ''],
+    ['[    0.214] mount /radovi ................. ', 'OK'], ['[    0.402] start n8n.service ............. ', 'OK'],
+    ['[    0.588] start telegram-bots.service ... ', 'OK'], ['[    0.731] start fivem-server.service .... ', 'OK'],
+    ['[    0.902] firewall ...................... ', en ? 'ACTIVE' : 'AKTIVAN'], ['[    1.044] ' + (en ? 'ethics module' : 'etički modul') + ' ................ ', 'ON'],
+    ['', ''], ['lukamaric login: ', 'LOGIN'], ['Password: ', 'PASS'],
+    ['', ''], [en ? 'access granted. welcome back, ric.' : 'pristup odobren. dobro došao nazad, ric.', 'w']
+  ];
+  var i = 0, closed = false;
+  function close() { if (closed) return; closed = true; b.classList.add('done'); setTimeout(function () { b.remove(); }, 600); }
+  b.onclick = close; addEventListener('keydown', close, { once: true });
+  var sk = h('div', 'skip', en ? 'tap / any key to skip' : 'klikni / bilo koji taster za preskok'); b.appendChild(sk);
+  (function next() {
+    if (closed) return;
+    if (i >= L.length) { setTimeout(close, 650); return; }
+    var l = L[i++], d = h('div');
+    if (l[1] === 'LOGIN' || l[1] === 'PASS') {
+      d.textContent = l[0]; var tv = h('span', 'ok'); d.appendChild(tv); d.appendChild(h('span', 'tcur')); b.insertBefore(d, sk);
+      var word = l[1] === 'LOGIN' ? 'ric' : '••••••••', c = 0;
+      (function ty() { if (closed) return; tv.textContent = word.slice(0, ++c); if (c < word.length) setTimeout(ty, 110); else { setTimeout(function () { d.lastChild.remove(); next(); }, 280); } })();
+      return;
+    }
+    if (l[1] === 'w') { d.className = 'w'; d.textContent = l[0]; }
+    else { d.textContent = l[0]; if (l[1]) d.appendChild(h('span', 'ok', '[ ' + l[1] + ' ]')); }
+    b.insertBefore(d, sk);
+    setTimeout(next, 70 + Math.random() * 110);
+  })();
+})();
+
+/* ---- Mreža tačaka u pozadini ---- */
+(function () {
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cv = document.getElementById('net'), x = cv.getContext('2d'), dpr = Math.min(devicePixelRatio || 1, 2), W, H, P = [], m = { x: -999, y: -999 };
+  function size() {
+    W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var n = Math.round(Math.min(90, W * H / 16000)); P = [];
+    for (var i = 0; i < n; i++) P.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3 });
+  }
+  size(); addEventListener('resize', size);
+  addEventListener('pointermove', function (e) { m.x = e.clientX; m.y = e.clientY; }, { passive: true });
+  addEventListener('pointerleave', function () { m.x = m.y = -999; });
+  var vis = true; document.addEventListener('visibilitychange', function () { vis = !document.hidden; if (vis) requestAnimationFrame(tick); });
+  function tick() {
+    if (!vis) return;
+    x.clearRect(0, 0, W, H);
+    for (var i = 0; i < P.length; i++) {
+      var p = P[i]; p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
+      var dx = p.x - m.x, dy = p.y - m.y, dm = dx * dx + dy * dy;
+      if (dm < 14000) { p.x += dx * 0.012; p.y += dy * 0.012; }
+      x.fillStyle = 'rgba(77,240,160,0.7)'; x.fillRect(p.x - 1, p.y - 1, 2, 2);
+      for (var j = i + 1; j < P.length; j++) {
+        var q = P[j], a = p.x - q.x, b = p.y - q.y, d = a * a + b * b;
+        if (d < 12000) { x.strokeStyle = 'rgba(77,240,160,' + (0.18 * (1 - d / 12000)) + ')'; x.beginPath(); x.moveTo(p.x, p.y); x.lineTo(q.x, q.y); x.stroke(); }
+      }
+      if (dm < 22000) { x.strokeStyle = 'rgba(255,180,84,' + (0.35 * (1 - dm / 22000)) + ')'; x.beginPath(); x.moveTo(p.x, p.y); x.lineTo(m.x, m.y); x.stroke(); }
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ---- Terminal ---- */
+(function () {
+  var out = document.getElementById('sh-out'), inp = document.getElementById('sh-in'), hist = [], hi = 0;
+  function line(txt, cls) { var d = h('div', cls || 'o'); d.textContent = txt; out.appendChild(d); out.scrollTop = out.scrollHeight; return d; }
+  function L(sr, en) { return lang === 'en' ? en : sr; }
+  function go(id) { var el = document.getElementById(id); if (el) setTimeout(function () { el.scrollIntoView({ behavior: 'smooth' }); }, 350); }
+  function skills() {
+    var g = {}; document.querySelectorAll('.skills > div').forEach(function (d) {
+      g[d.querySelector('.glabel').textContent] = Array.prototype.map.call(d.querySelectorAll('.chip'), function (c) { return c.textContent; });
+    });
+    return Object.keys(g).map(function (k) { return (k + '          ').slice(0, 11) + g[k].join(', '); }).join('\n');
+  }
+  var C = {
+    help: function () { return L(
+      'dostupne komande:\n  whoami     ko sam\n  skills     šta znam\n  projects   na čemu radim\n  contact    kako da me nađeš\n  book       zakaži razgovor\n  scan       skeniraj ovaj sajt\n  matrix     ...probaj\n  lang       SR/EN\n  clear      očisti ekran',
+      'available commands:\n  whoami     who I am\n  skills     what I know\n  projects   what I work on\n  contact    how to reach me\n  book       book a call\n  scan       scan this site\n  matrix     ...try it\n  lang       SR/EN\n  clear      clear screen'); },
+    whoami: function () { return 'Luka Marić\n' + (CONFIG.role[lang] || []).join(' / ') + '\n\n' + CONFIG.about[lang]; },
+    skills: function () { return skills(); },
+    projects: function () { go('radovi'); return Array.prototype.map.call(document.querySelectorAll('#grid h3'), function (x) { return '  > ' + x.textContent; }).join('\n') + '\n' + L('(skrolujem do radova...)', '(scrolling to work...)'); },
+    contact: function () { var c = CONFIG.contact; return 'telegram   @' + c.telegram + '\nemail      ' + c.email; },
+    book: function () { go('termin'); return L('otvaram kalendar...', 'opening calendar...'); },
+    lang: function () { setLang(lang === 'sr' ? 'en' : 'sr'); return 'lang = ' + lang; },
+    uname: function () { return 'Linux lukamaric 6.x x86_64 GNU/Linux  |  Windows 11 Pro'; },
+    ver: function () { return 'Microsoft Windows [Version 10.0.26100]'; },
+    ls: function () { return 'o-meni.txt  radovi/  termin.cal  kontakt.txt  .secret'; },
+    'cat .secret': function () { return L('lepo, znaš da gledaš i skrivene fajlove. probaj: sudo hire luka', 'nice, you check hidden files. try: sudo hire luka'); },
+    sudo: function () { return L('[sudo] lozinka za guest: ********\nguest nije u sudoers fajlu. ovaj incident će biti prijavljen. 😉', '[sudo] password for guest: ********\nguest is not in the sudoers file. this incident will be reported. 😉'); },
+    'sudo hire luka': function () { go('termin'); return L('pristup odobren ✓\nhvala na poverenju! biraj termin u kalendaru ispod.', 'access granted ✓\nthanks for the trust! pick a slot in the calendar below.'); },
+    'rm -rf /': function () { return L('lepo pokušano. 🙂 ovde to ne prolazi.', 'nice try. 🙂 not here.'); },
+    date: function () { return new Date().toLocaleString(t('locale')); },
+    matrix: function () { matrix(); return L('wake up, neo... (klikni ili Esc za izlaz)', 'wake up, neo... (click or Esc to exit)'); },
+    clear: function () { out.textContent = ''; return null; }
+  };
+  C.scan = function () {
+    var steps = [
+      ['[*] nmap -sV lukamaric.online', 'd'], ['PORT    STATE  SERVICE', 'd'], ['443/tcp open   https (TLS 1.3)', 'o'], ['80/tcp  open   http -> 301 https', 'o'],
+      [L('[+] HTTPS: uključen', '[+] HTTPS: enabled'), 'o'], [L('[+] forme: zaštićene od botova', '[+] forms: bot-protected'), 'o'],
+      [L('[+] lozinke/ključevi u kodu: nema', '[+] secrets in source: none'), 'o'], [L('[✓] nalaz: sajt je čist. dobar pokušaj ;)', '[✓] result: site is clean. good try ;)'), 'e']
+    ];
+    inp.disabled = true;
+    steps.forEach(function (st, i) { setTimeout(function () { line(st[0], st[1]); if (i === steps.length - 1) { inp.disabled = false; inp.focus({ preventScroll: true }); } }, 260 * (i + 1)); });
+    return null;
+  };
+  function run(cmd) {
+    cmd = cmd.trim().replace(/\s+/g, ' ');
+    if (!cmd) return;
+    var d = h('div', 'in'), b = h('b', '', 'guest@lukamaric:~$ '); d.appendChild(b); d.appendChild(document.createTextNode(cmd)); out.appendChild(d);
+    hist.push(cmd); hi = hist.length;
+    var k = cmd.toLowerCase(), f = C[k] || (k.indexOf('sudo ') === 0 && k !== 'sudo hire luka' ? C.sudo : null);
+    var r = f ? f() : L('komanda nije pronađena: ' + cmd + '  (probaj help)', 'command not found: ' + cmd + '  (try help)');
+    if (r != null) line(r, f ? 'o' : 'e');
+    out.scrollTop = out.scrollHeight;
+  }
+  document.getElementById('sh-form').addEventListener('submit', function (e) { e.preventDefault(); run(inp.value); inp.value = ''; });
+  inp.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowUp' && hi > 0) { inp.value = hist[--hi]; e.preventDefault(); }
+    else if (e.key === 'ArrowDown') { hi = Math.min(hist.length, hi + 1); inp.value = hist[hi] || ''; e.preventDefault(); }
+    else if (e.key === 'Tab') { e.preventDefault(); var m = Object.keys(C).filter(function (c) { return c.indexOf(inp.value) === 0 && c.indexOf(' ') < 0; }); if (m.length === 1) inp.value = m[0]; else if (inp.value) line(m.join('  '), 'd'); }
+  });
+  document.getElementById('shell').addEventListener('click', function () { if (!getSelection().toString()) inp.focus({ preventScroll: true }); });
+  var tips = document.getElementById('sh-tips');
+  ['help', 'whoami', 'skills', 'scan', 'sudo hire luka', 'matrix'].forEach(function (c) {
+    var b = h('button', '', c); b.type = 'button'; b.onclick = function () { run(c); }; tips.appendChild(b);
+  });
+  line(L('Luka Marić shell v1.0. Ukucaj "help" za listu komandi.', 'Luka Marić shell v1.0. Type "help" for a list of commands.'), 'd');
+
+  function matrix() {
+    var cv = document.createElement('canvas'); cv.id = 'matrix'; document.body.appendChild(cv);
+    var x = cv.getContext('2d'), W, H, cols, drops, fs = 16, run = true;
+    function size() { W = cv.width = innerWidth; H = cv.height = innerHeight; cols = Math.ceil(W / fs); drops = []; for (var i = 0; i < cols; i++) drops[i] = Math.random() * -50; }
+    size();
+    var ch = 'アイウエオカキクケコサシスセソ01LUKAMARIC<>/{}$#';
+    (function tick() {
+      if (!run) return;
+      x.fillStyle = 'rgba(0,0,0,0.08)'; x.fillRect(0, 0, W, H); x.font = fs + 'px JetBrains Mono, monospace';
+      for (var i = 0; i < cols; i++) {
+        x.fillStyle = Math.random() > 0.97 ? '#CFEFDF' : '#4DF0A0';
+        x.fillText(ch[Math.floor(Math.random() * ch.length)], i * fs, drops[i] * fs);
+        if (drops[i] * fs > H && Math.random() > 0.975) drops[i] = 0; drops[i]++;
+      }
+      requestAnimationFrame(tick);
+    })();
+    function stop() { run = false; cv.remove(); removeEventListener('keydown', esc); }
+    function esc(e) { if (e.key === 'Escape') stop(); }
+    cv.onclick = stop; addEventListener('keydown', esc); setTimeout(stop, 12000);
+  }
+})();
+
+/* ---- Efekti ---- */
+(function () {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bar = document.getElementById('progress');
+  function onScroll() {
+    var max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0) + ')';
+  }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  if (window.matchMedia && matchMedia('(hover: hover)').matches) {
+    addEventListener('pointermove', function (e) {
+      document.body.classList.add('has-mouse');
+      document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+      document.documentElement.style.setProperty('--my', e.clientY + 'px');
+      var c = e.target.closest && e.target.closest('.card, .does > div');
+      if (c) { var r = c.getBoundingClientRect(); c.style.setProperty('--x', (e.clientX - r.left) + 'px'); c.style.setProperty('--y', (e.clientY - r.top) + 'px'); }
+    }, { passive: true });
+  }
+
+  if (reduce || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { var el = e.target; el.classList.add('in'); io.unobserve(el); setTimeout(function () { el.classList.remove('reveal', 'in'); el.style.transitionDelay = ''; }, 1300); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  function mark() {
+    document.querySelectorAll('section h2, section .comment, .does > div, .skills > div, .rules li, .card, .panel, .crow, .shell').forEach(function (el, i) {
+      if (el.dataset.rv) return;
+      el.dataset.rv = 1; el.classList.add('reveal');
+      var sib = el.parentNode ? Array.prototype.indexOf.call(el.parentNode.children, el) : 0;
+      el.style.transitionDelay = Math.min(sib, 6) * 70 + 'ms';
+      io.observe(el);
+    });
+  }
+  mark();
+  new MutationObserver(mark).observe(document.querySelector('main'), { childList: true, subtree: true });
+})();
 </script>
 </body>
 </html>
